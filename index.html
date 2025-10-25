@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>KPI Builder V4.1</title>
+<title>KPI Builder V4.2</title>
 <link rel="stylesheet" href="style.css" />
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
@@ -38,6 +38,13 @@
     <option value="">Aucun</option>
     <option value="bar">Barre</option>
     <option value="pie">Camembert</option>
+  </select>
+
+  <label>Taille du bloc</label>
+  <select id="kpi-size">
+    <option value="small">Small (1x1)</option>
+    <option value="medium">Medium (2x1)</option>
+    <option value="large">Large (2x2)</option>
   </select>
 
   <div style="display:flex; gap:10px; margin-top:6px;">
