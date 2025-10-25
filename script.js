@@ -7,6 +7,7 @@ const nameInput = document.getElementById("kpi-name");
 const typeInput = document.getElementById("kpi-type");
 const columnSelect = document.getElementById("kpi-column");
 const chartSelect = document.getElementById("kpi-chart");
+const sizeSelect = document.getElementById("kpi-size");
 const fileInput = document.getElementById("file-input");
 
 let editingId = null;
@@ -62,7 +63,7 @@ function renderKPIs(){
   kpiContainer.innerHTML='';
   kpis.forEach(kpi=>{
     const block=document.createElement('div');
-    block.className='kpi-block';
+    block.className=`kpi-block ${kpi.size||'small'}`;
     block.dataset.id=kpi.id;
 
     const title=document.createElement('h3');
@@ -80,10 +81,12 @@ function renderKPIs(){
     block.appendChild(value);
 
     // Graph
-    const canvas=document.createElement('canvas');
-    canvas.className='kpi-chart';
-    block.appendChild(canvas);
-    if(kpi.chart && kpi.chart!=='') renderChart(canvas,kpi);
+    if(kpi.chart && kpi.chart!==''){
+      const canvas=document.createElement('canvas');
+      canvas.className='kpi-chart';
+      block.appendChild(canvas);
+      renderChart(canvas,kpi);
+    }
 
     block.addEventListener('click',()=>editKPI(kpi.id));
     kpiContainer.appendChild(block);
@@ -102,7 +105,11 @@ function renderChart(canvas,kpi){
       labels,
       datasets:[{label:kpi.name,data:vals,backgroundColor:type==='pie'?generateColors(vals.length):'#3ecdd1'}]
     },
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:type==='pie'}}}
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{legend:{display:type==='pie'}}
+    }
   });
 }
 
@@ -119,16 +126,17 @@ saveBtn.addEventListener('click',()=>{
   const type=typeInput.value;
   const column=columnSelect.value;
   const chart=chartSelect.value;
+  const size=sizeSelect.value||'small';
   if(!name) return alert('Nom du KPI requis');
 
   if(editingId){
     const idx=kpis.findIndex(k=>k.id===editingId);
     if(idx!==-1){
-      kpis[idx]={...kpis[idx], name, type, column, chart};
+      kpis[idx]={...kpis[idx], name, type, column, chart, size};
     }
     editingId=null;
   } else {
-    kpis.push({id:Date.now().toString(), name, type, column, chart});
+    kpis.push({id:Date.now().toString(), name, type, column, chart, size});
   }
   resetSidebar();
   renderKPIs();
@@ -149,6 +157,7 @@ function editKPI(id){
   typeInput.value=kpi.type;
   columnSelect.value=kpi.column;
   chartSelect.value=kpi.chart||'';
+  sizeSelect.value=kpi.size||'small';
   deleteBtn.style.display='block';
   sidebarTitle.textContent='Modifier KPI';
 }
@@ -159,6 +168,7 @@ function resetSidebar(){
   typeInput.value='';
   columnSelect.value='';
   chartSelect.value='';
+  sizeSelect.value='small';
   deleteBtn.style.display='none';
   sidebarTitle.textContent='Créer un KPI';
 }
