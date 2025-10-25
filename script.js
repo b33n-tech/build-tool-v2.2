@@ -80,11 +80,13 @@ function renderKPIs(){
     value.textContent=computeKPI(kpi);
     block.appendChild(value);
 
-    // Graph
     if(kpi.chart && kpi.chart!==''){
+      const wrapper = document.createElement('div');
+      wrapper.className='kpi-chart-wrapper';
       const canvas=document.createElement('canvas');
       canvas.className='kpi-chart';
-      block.appendChild(canvas);
+      wrapper.appendChild(canvas);
+      block.appendChild(wrapper);
       renderChart(canvas,kpi);
     }
 
@@ -101,14 +103,12 @@ function renderChart(canvas,kpi){
   const type = kpi.chart;
   new Chart(canvas,{
     type,
-    data:{
-      labels,
-      datasets:[{label:kpi.name,data:vals,backgroundColor:type==='pie'?generateColors(vals.length):'#3ecdd1'}]
-    },
+    data:{ labels, datasets:[{label:kpi.name,data:vals,backgroundColor:type==='pie'?generateColors(vals.length):'#3ecdd1'}] },
     options:{
       responsive:true,
       maintainAspectRatio:false,
-      plugins:{legend:{display:type==='pie'}}
+      plugins:{legend:{display:type==='pie'}},
+      scales: type==='bar'? {y:{beginAtZero:true}} : {}
     }
   });
 }
@@ -131,9 +131,7 @@ saveBtn.addEventListener('click',()=>{
 
   if(editingId){
     const idx=kpis.findIndex(k=>k.id===editingId);
-    if(idx!==-1){
-      kpis[idx]={...kpis[idx], name, type, column, chart, size};
-    }
+    if(idx!==-1) kpis[idx]={...kpis[idx], name, type, column, chart, size};
     editingId=null;
   } else {
     kpis.push({id:Date.now().toString(), name, type, column, chart, size});
