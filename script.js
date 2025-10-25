@@ -16,6 +16,7 @@ let editingId = null;
 let kpis = JSON.parse(localStorage.getItem('kpis')) || [];
 let dataBase = [];
 
+// ------------------ Upload CSV/XLSX ------------------
 fileInput.addEventListener('change', e => {
   const file = e.target.files[0];
   if (!file) return;
@@ -48,6 +49,7 @@ function populateColumns(){
   });
 }
 
+// ------------------ Calcul KPI ------------------
 function computeKPI(kpi){
   if(!dataBase.length || !kpi.column || !kpi.type) return '—';
   const vals = dataBase.map(r=>parseFloat(r[kpi.column])).filter(v=>!isNaN(v));
@@ -61,6 +63,7 @@ function computeKPI(kpi){
   }
 }
 
+// ------------------ Render KPIs ------------------
 function renderKPIs(){
   kpiContainer.innerHTML='';
   kpis.forEach(kpi=>{
@@ -102,6 +105,7 @@ function renderKPIs(){
   localStorage.setItem('kpis',JSON.stringify(kpis));
 }
 
+// ------------------ Render Chart ------------------
 function renderChart(canvas,kpi){
   if(!dataBase.length || !kpi.column) return;
   const vals = dataBase.map(r=>parseFloat(r[kpi.column])).filter(v=>!isNaN(v));
@@ -127,6 +131,7 @@ function generateColors(n){
   return colors;
 }
 
+// ------------------ Add / Update / Delete KPI ------------------
 saveBtn.addEventListener('click',()=>{
   const name=nameInput.value.trim();
   const type=typeInput.value;
@@ -187,8 +192,15 @@ function resetSidebar(){
   sidebarTitle.textContent='Créer un KPI';
 }
 
-// Drag & Drop
+// ------------------ Drag & Drop ------------------
 new Sortable(kpiContainer,{animation:150,ghostClass:'sortable-ghost'});
 
-// Initial render
+// ------------------ Click en dehors d'un bloc pour désélection ------------------
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.kpi-block') && !e.target.closest('#sidebar')) {
+    resetSidebar();
+  }
+});
+
+// ------------------ Initial render ------------------
 renderKPIs();
