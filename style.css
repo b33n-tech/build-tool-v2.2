@@ -46,6 +46,7 @@ body {
   flex-wrap: wrap;
   gap: 10px;
   overflow-y: auto;
+  position: relative;
 }
 
 .kpi-block {
@@ -56,13 +57,12 @@ body {
   cursor: grab;
   min-width: 100px;
   min-height: 50px;
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  resize: both;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .kpi-block h3 {
