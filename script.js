@@ -8,6 +8,8 @@ const typeInput = document.getElementById("kpi-type");
 const columnSelect = document.getElementById("kpi-column");
 const chartSelect = document.getElementById("kpi-chart");
 const sizeSelect = document.getElementById("kpi-size");
+const widthInput = document.getElementById("kpi-width");
+const heightInput = document.getElementById("kpi-height");
 const fileInput = document.getElementById("file-input");
 
 let editingId = null;
@@ -65,6 +67,10 @@ function renderKPIs(){
     const block=document.createElement('div');
     block.className=`kpi-block ${kpi.size||'small'}`;
     block.dataset.id=kpi.id;
+
+    // Largeur / Hauteur personnalisées
+    if(kpi.width) block.style.width = kpi.width+'px';
+    if(kpi.height) block.style.height = kpi.height+'px';
 
     const title=document.createElement('h3');
     title.textContent=kpi.name;
@@ -127,15 +133,21 @@ saveBtn.addEventListener('click',()=>{
   const column=columnSelect.value;
   const chart=chartSelect.value;
   const size=sizeSelect.value||'small';
+  const width=parseInt(widthInput.value)||null;
+  const height=parseInt(heightInput.value)||null;
+
   if(!name) return alert('Nom du KPI requis');
+
+  const kpiObj={id:editingId||Date.now().toString(), name, type, column, chart, size, width, height};
 
   if(editingId){
     const idx=kpis.findIndex(k=>k.id===editingId);
-    if(idx!==-1) kpis[idx]={...kpis[idx], name, type, column, chart, size};
+    if(idx!==-1) kpis[idx]=kpiObj;
     editingId=null;
   } else {
-    kpis.push({id:Date.now().toString(), name, type, column, chart, size});
+    kpis.push(kpiObj);
   }
+
   resetSidebar();
   renderKPIs();
 });
@@ -156,6 +168,8 @@ function editKPI(id){
   columnSelect.value=kpi.column;
   chartSelect.value=kpi.chart||'';
   sizeSelect.value=kpi.size||'small';
+  widthInput.value=kpi.width||'';
+  heightInput.value=kpi.height||'';
   deleteBtn.style.display='block';
   sidebarTitle.textContent='Modifier KPI';
 }
@@ -167,6 +181,8 @@ function resetSidebar(){
   columnSelect.value='';
   chartSelect.value='';
   sizeSelect.value='small';
+  widthInput.value='';
+  heightInput.value='';
   deleteBtn.style.display='none';
   sidebarTitle.textContent='Créer un KPI';
 }
