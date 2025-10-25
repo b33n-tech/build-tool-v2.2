@@ -83,7 +83,6 @@ body {
 }
 
 .kpi-block {
-  width: 220px;
   background-color: #232f3c;
   border: 2px solid #3ecdd1;
   border-radius: 8px;
@@ -99,6 +98,10 @@ body {
   transform: translateY(-4px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.35);
 }
+
+.kpi-block.small { width: 220px; height: 140px; }
+.kpi-block.medium { width: 440px; height: 140px; }
+.kpi-block.large { width: 440px; height: 280px; }
 
 .kpi-block h3 {
   color: #3ecdd1;
@@ -125,5 +128,6 @@ body {
 
 .kpi-chart {
   margin-top: 10px;
-  height: 140px;
+  width: 100%;
+  height: calc(100% - 60px);
 }
