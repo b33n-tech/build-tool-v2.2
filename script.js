@@ -7,7 +7,6 @@ const nameInput = document.getElementById("kpi-name");
 const typeInput = document.getElementById("kpi-type");
 const columnSelect = document.getElementById("kpi-column");
 const chartSelect = document.getElementById("kpi-chart");
-const sizeSelect = document.getElementById("kpi-size");
 const fileInput = document.getElementById("file-input");
 
 let editingId = null;
@@ -68,9 +67,9 @@ function renderKPIs(){
     const block=document.createElement('div');
     block.className='kpi-block';
     block.dataset.id=kpi.id;
-    if(kpi.width) block.style.width=kpi.width+'px';
-    if(kpi.height) block.style.height=kpi.height+'px';
-    if(kpi.x) block.style.transform=`translate(${kpi.x}px,${kpi.y}px)`;
+    block.style.width=(kpi.width||150)+'px';
+    block.style.height=(kpi.height||100)+'px';
+    block.style.transform=`translate(${kpi.x||10}px,${kpi.y||10}px)`;
 
     const title=document.createElement('h3');
     title.textContent=kpi.name;
@@ -112,7 +111,6 @@ function renderKPIs(){
             const t=event.target;
             t.style.width=event.rect.width+'px';
             t.style.height=event.rect.height+'px';
-
             let x=(parseFloat(t.getAttribute('data-x'))||0)+event.deltaRect.left;
             let y=(parseFloat(t.getAttribute('data-y'))||0)+event.deltaRect.top;
             t.style.transform=`translate(${x}px,${y}px)`;
@@ -154,11 +152,10 @@ saveBtn.addEventListener('click',()=>{
   const type=typeInput.value;
   const column=columnSelect.value;
   const chart=chartSelect.value;
-  const size=sizeSelect.value||'small';
 
   if(!name) return alert('Nom du KPI requis');
 
-  const kpiObj={id:editingId||Date.now().toString(),name,type,column,chart,size};
+  const kpiObj={id:editingId||Date.now().toString(),name,type,column,chart};
 
   if(editingId){
     const idx=kpis.findIndex(k=>k.id===editingId);
@@ -185,7 +182,6 @@ function editKPI(id){
   typeInput.value=kpi.type;
   columnSelect.value=kpi.column;
   chartSelect.value=kpi.chart||'';
-  sizeSelect.value=kpi.size||'small';
   deleteBtn.style.display='block';
   sidebarTitle.textContent='Modifier KPI';
 }
@@ -196,7 +192,6 @@ function resetSidebar(){
   typeInput.value='';
   columnSelect.value='';
   chartSelect.value='';
-  sizeSelect.value='small';
   deleteBtn.style.display='none';
   sidebarTitle.textContent='Créer un KPI';
 }
