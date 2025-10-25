@@ -1,71 +1,45 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>KPI Builder V4.4</title>
-<link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<title>Dashboard Lego KPI</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
 </head>
 <body>
 <div id="sidebar">
   <h2 id="sidebar-title">Créer un KPI</h2>
-
-  <label>Upload CSV/XLSX</label>
-  <input type="file" id="file-input" accept=".csv,.xlsx" />
-
-  <label>Nom du KPI</label>
-  <input type="text" id="kpi-name" placeholder="Nom du KPI" />
-
-  <label>Type de calcul</label>
+  <input type="text" id="kpi-name" placeholder="Nom du KPI">
   <select id="kpi-type">
     <option value="">Type de calcul</option>
     <option value="sum">Somme</option>
     <option value="avg">Moyenne</option>
-    <option value="min">Min</option>
-    <option value="max">Max</option>
+    <option value="min">Minimum</option>
+    <option value="max">Maximum</option>
   </select>
-
-  <label>Colonne source</label>
   <select id="kpi-column">
-    <option value="">Sélectionner une colonne</option>
+    <option value="">Colonne source</option>
   </select>
-
-  <label>Type de graphique</label>
   <select id="kpi-chart">
-    <option value="">Aucun</option>
-    <option value="bar">Barre</option>
+    <option value="">Graphique</option>
+    <option value="bar">Barres</option>
     <option value="pie">Camembert</option>
   </select>
-
-  <label>Taille du bloc (preset)</label>
   <select id="kpi-size">
-    <option value="small">Small (1x1)</option>
-    <option value="medium">Medium (2x1)</option>
-    <option value="large">Large (2x2)</option>
+    <option value="small">Petit</option>
+    <option value="medium">Moyen</option>
+    <option value="large">Grand</option>
   </select>
-
-  <label>Largeur (px)</label>
-  <input type="number" id="kpi-width" placeholder="Ex: 220" />
-
-  <label>Hauteur (px)</label>
-  <input type="number" id="kpi-height" placeholder="Ex: 140" />
-
-  <div style="display:flex; gap:10px; margin-top:6px;">
-    <button id="save-btn">Ajouter / Mettre à jour KPI</button>
-    <button id="delete-btn" style="display:none;">🗑️ Supprimer</button>
-  </div>
-  <div style="margin-top:12px; font-size:0.85rem; color:#bcdfe0">
-    Cliquez sur une brique pour l'éditer dans la sidebar.
-  </div>
+  <label>Lien fichier CSV/XLSX :</label>
+  <input type="file" id="file-input">
+  <button id="save-btn">Mettre à jour KPI</button>
+  <button id="delete-btn" style="display:none;background-color:red;">Supprimer KPI</button>
 </div>
 
-<div id="dashboard">
-  <h1>Dashboard Lego KPI</h1>
-  <div id="kpiContainer"></div>
-</div>
+<div id="kpiContainer"></div>
 
 <script src="script.js"></script>
 </body>
