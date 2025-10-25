@@ -42,37 +42,14 @@ body {
   transition: 0.2s;
 }
 
-#save-btn {
-  background-color: #3ecdd1;
-  color: #1d2732;
-}
-
-#save-btn:hover {
-  background-color: #35b9c1;
-  color: white;
-}
-
-#delete-btn {
-  background-color: #c84c4c;
-  color: white;
-}
-
-#delete-btn:hover {
-  background-color: #e05757;
-}
+#save-btn { background-color: #3ecdd1; color: #1d2732; }
+#save-btn:hover { background-color: #35b9c1; color: white; }
+#delete-btn { background-color: #c84c4c; color: white; }
+#delete-btn:hover { background-color: #e05757; }
 
 /* === Dashboard === */
-#dashboard {
-  flex-grow: 1;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-#dashboard h1 {
-  color: #3ecdd1;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
+#dashboard { flex-grow: 1; padding: 20px; overflow-y: auto; }
+#dashboard h1 { color: #3ecdd1; font-weight: 600; margin-bottom: 12px; }
 
 /* === KPI Blocks === */
 #kpiContainer {
@@ -93,41 +70,16 @@ body {
   position: relative;
   transition: transform 0.12s, box-shadow 0.12s;
 }
-
-.kpi-block:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
-}
+.kpi-block:hover { transform: translateY(-4px); box-shadow: 0 8px 18px rgba(0,0,0,0.35); }
 
 .kpi-block.small { width: 220px; height: 140px; }
 .kpi-block.medium { width: 440px; height: 140px; }
 .kpi-block.large { width: 440px; height: 280px; }
 
-.kpi-block h3 {
-  color: #3ecdd1;
-  margin: 0 0 6px 0;
-  font-size: 1.05rem;
-  font-weight: 600;
-}
+.kpi-block h3 { color: #3ecdd1; margin: 0 0 6px 0; font-size: 1.05rem; font-weight: 600; }
+.kpi-meta { font-size: 0.85rem; color: #bcdfe0; margin-bottom: 6px; }
+.kpi-value { font-weight: 700; margin-top: 6px; padding: 6px 8px; border-radius: 6px; background: rgba(255,255,255,0.05); text-align: center; font-size: 1.1rem; }
 
-.kpi-meta {
-  font-size: 0.85rem;
-  color: #bcdfe0;
-  margin-bottom: 6px;
-}
-
-.kpi-value {
-  font-weight: 700;
-  margin-top: 6px;
-  padding: 6px 8px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.05);
-  text-align: center;
-  font-size: 1.1rem;
-}
-
-.kpi-chart {
-  margin-top: 10px;
-  width: 100%;
-  height: calc(100% - 60px);
-}
+/* === Chart wrapper === */
+.kpi-chart-wrapper { width: 100%; height: 100%; position: relative; }
+.kpi-chart { width: 100% !important; height: 100% !important; }
